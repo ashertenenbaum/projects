@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .title {
+            text-align: center;
+            font-family: 'Arial Black', Arial, sans-serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .project {
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            transition: box-shadow 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .project:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+        .project img {
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .project h2 {
+            margin-top: 0;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .project p {
+            margin-top: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+        }
+        .project button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .year-tag {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #444;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title" style="font-family: 'Times New Roman', serif;">My Projects</div>
+        <div class="project" onclick="window.location.href='https://cardiac_care.ashertenenbaum.com'">
+            <img src="https://i.imgur.com/urACt1q.png" alt="Cardiac Care">
+            <div>
+                <h2>Cardiac Care</h2>
+                <p>Remaking body parts with 3D printing. Click to learn more</p>
+                <div class="year-tag">Y7</div>
+            </div>
+        </div>
+        <div class="project" onclick="window.location.href='https://reimaginedchess.ashertenenbaum.com'">
+            <img src="https://i.imgur.com/Ux6ep6q.png" alt="Reimagined Chess">
+            <div>
+                <h2>Reimagined Chess</h2>
+                <p>A web-based chess-like game with an AI. Click to learn more</p>
+                <div class="year-tag">Y8</div>
+            </div>
+        </div>
+        <div class="project" onclick="window.location.href='https://tennisml.ashertenenbaum.com'">
+            <img src="https://i.imgur.com/o34unHE.png" alt="TennisML">
+            <div>
+                <h2>TennisML</h2>
+                <p>An AI-powered tennis serve analysis tool. Click to learn more</p>
+                <div class="year-tag">Y9</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
