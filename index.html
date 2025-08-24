@@ -1,113 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .title {
-            text-align: center;
-            font-family: 'Arial Black', Arial, sans-serif;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        .project {
-            background-color: #fff;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            position: relative;
-            transition: box-shadow 0.3s, transform 0.3s;
-            cursor: pointer;
-        }
-        .project:hover {
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            transform: scale(1.05);
-        }
-        .project img {
-            width: 150px;
-            height: auto;
-            border-radius: 8px;
-            margin-right: 20px;
-        }
-        .project h2 {
-            margin-top: 0;
-            font-family: 'Arial', sans-serif;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .project p {
-            margin-top: 5px;
-            font-family: 'Arial', sans-serif;
-            font-size: 16px;
-        }
-        .project button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            font-family: 'Arial', sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            color: #007bff;
-            text-decoration: underline;
-        }
-        .year-tag {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: #444;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Projects</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-1:#0f1226;
+      --bg-2:#0b0f2a;
+      --card:#121632;
+      --card-2:#161b3d;
+      --text:#e9ecff;
+      --muted:#b7c0ffcc;
+      --accent-1:#6ee7ff;
+      --accent-2:#8b5cf6;
+      --accent-3:#22d3ee;
+      --ring: rgba(110,231,255,.35);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius-sm: 12px;
+    }
+
+    /* ===== Page base ===== */
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 1200px at 10% -10%, #1b2155 0%, transparent 60%),
+        radial-gradient(1000px 800px at 110% 10%, #2a145e 0%, transparent 60%),
+        radial-gradient(800px 800px at 50% 120%, #0f3754 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      min-height:100%;
+      overflow-x:hidden;
+    }
+
+    .noise{
+      pointer-events:none;
+      position:fixed; inset:0; opacity:.03; mix-blend-mode:soft-light;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width=\"160\" height=\"160\" viewBox=\"0 0 160 160\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.9\" numOctaves=\"2\" stitchTiles=\"stitch\"/></filter><rect width=\"100%\" height=\"100%\" filter=\"url(%23n)\" opacity=\"0.5\"/></svg>');
+    }
+
+    .container{
+      max-width:1100px;
+      margin: 0 auto;
+      padding: 64px 20px 100px;
+    }
+
+    /* ===== Title ===== */
+    .title-wrap{
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      margin-bottom: 40px;
+    }
+    .title{
+      font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+      font-weight: 700;
+      font-size: clamp(32px, 6vw, 64px);
+      line-height:1.05;
+      letter-spacing: .5px;
+      margin:0;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 8s ease-in-out infinite;
+      filter: drop-shadow(0 6px 24px rgba(34,211,238,.15));
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    @keyframes shimmer{
+      0%,100%{ background-position: 0% 50%; }
+      50%{ background-position: 100% 50%; }
+    }
+
+    /* ===== Grid ===== */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    /* ===== Card (anchor so it opens in new tab) ===== */
+    .project{
+      grid-column: span 6;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      text-decoration:none;
+      color: inherit;
+      isolation:isolate;
+      transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        box-shadow .45s cubic-bezier(.2,.8,.2,1),
+        background .5s ease;
+      outline: none;
+    }
+    .project:focus-visible{
+      box-shadow: 0 0 0 6px var(--ring), var(--shadow);
+    }
+    .project:hover{
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+    }
+
+    /* Fancy border glow on hover */
+    .project::before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius: calc(var(--radius) + 1px);
+      padding:1px;
+      background: linear-gradient(120deg, rgba(110,231,255,.0), rgba(139,92,246,.0));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      transition: background .6s ease, opacity .6s ease;
+      opacity:.8;
+    }
+    .project:hover::before{
+      background: linear-gradient(120deg, rgba(110,231,255,.6), rgba(139,92,246,.6));
+    }
+
+    /* ===== Image ===== */
+    .thumb{
+      position:relative;
+      aspect-ratio: 16 / 9; /* crops any tall image nicely */
+      overflow:hidden;
+    }
+    .thumb img{
+      width:100%; height:100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 1s ease;
+      will-change: transform;
+    }
+    .project:hover .thumb img{
+      transform: scale(1.08);
+    }
+    .shine{
+      position:absolute; inset:0;
+      background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,.25) 50%, transparent 60%);
+      transform: translateX(-100%);
+      transition: transform .9s ease;
+      pointer-events:none;
+    }
+    .project:hover .shine{
+      transform: translateX(120%);
+    }
+
+    /* ===== Content ===== */
+    .content{
+      padding: 18px 18px 20px;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px 16px;
+      align-items:start;
+    }
+    .title-row{
+      display:flex; gap:10px; align-items:center; min-width:0;
+    }
+    .project h2{
+      margin:0;
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .desc{
+      grid-column: 1 / -1;
+      margin:0;
+      color: var(--muted);
+      line-height:1.55;
+      font-size: 15px;
+    }
+
+    /* ===== Year Tag with age-on-hover ===== */
+    .year-tag{
+      position:absolute;
+      bottom: 12px; right: 12px;
+      height: 40px; min-width: 40px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      display:flex; align-items:center; justify-content:center;
+      gap:8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing:.3px;
+      color:#eaf6ff;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+      transition: transform .4s ease, background .4s ease, border-color .4s ease;
+      pointer-events:none; /* purely decorative; whole card is the link */
+    }
+    .project:hover .year-tag{
+      transform: translateY(-2px);
+      background: linear-gradient(120deg, rgba(110,231,255,.18), rgba(139,92,246,.18));
+      border-color: rgba(110,231,255,.35);
+    }
+    .pill{
+      position:relative; display:block; min-width: 24px; text-align:center;
+    }
+    .pill .year, .pill .age{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      transition: opacity .3s ease, transform .3s ease;
+    }
+    .pill .age{ opacity:0; transform: translateY(4px); }
+    .project:hover .pill .year{ opacity:0; transform: translateY(-4px); }
+    .project:hover .pill .age{ opacity:1; transform: translateY(0); }
+
+    /* ===== Hover overlay with extra info ===== */
+    .overlay{
+      position:absolute; inset:auto 0 0 0;
+      transform: translateY(100%);
+      background: linear-gradient(180deg, rgba(12,16,44,.0), rgba(12,16,44,.85) 35%, rgba(12,16,44,.95));
+      color: #eaf1ff;
+      padding: 16px 18px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap: 10px;
+      transition: transform .45s ease;
+    }
+    .project:hover .overlay{ transform: translateY(0); }
+    .overlay .left{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+    }
+    .chip{
+      font-size:12px; font-weight:600; letter-spacing:.3px;
+      padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(4px);
+      white-space:nowrap;
+    }
+    .cta{
+      font-size:13px; font-weight:800;
+      padding: 8px 12px; border-radius: 10px;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      color:#0c102c; text-transform: uppercase; letter-spacing:.6px;
+      box-shadow: 0 6px 20px rgba(139,92,246,.35);
+    }
+
+    /* ===== Staggered entrance ===== */
+    .project{
+      opacity:0; transform: translateY(14px);
+      animation: floatIn .8s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    .project:nth-child(1){ animation-delay: .05s; }
+    .project:nth-child(2){ animation-delay: .15s; }
+    .project:nth-child(3){ animation-delay: .25s; }
+    .project:nth-child(4){ animation-delay: .35s; }
+
+    @keyframes floatIn{
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    /* ===== Small helper row beneath title ===== */
+    .legend{
+      display:flex; align-items:center; justify-content:center;
+      gap: 10px; margin: 12px 0 32px; color: var(--muted); font-size: 13px;
+    }
+    .legend .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      box-shadow: 0 0 0 3px rgba(110,231,255,.15);
+    }
+
+    /* ===== Footer note ===== */
+    .note{
+      text-align:center; color: var(--muted); font-size: 13px; margin-top: 22px;
+      opacity:.85;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title" style="font-family: 'Times New Roman', serif;">My Projects</div>
-        <div class="project" onclick="window.location.href='https://cardiaccare.ashertenenbaum.com'">
-            <img src="https://i.imgur.com/urACt1q.png" alt="Cardiac Care">
-            <div>
-                <h2>Cardiac Care</h2>
-                <p>Remaking body parts with 3D printing. Click to learn more</p>
-                <div class="year-tag">Y7</div>
-            </div>
-        </div>
-        <div class="project" onclick="window.location.href='https://reimaginedchess.ashertenenbaum.com'">
-            <img src="https://i.imgur.com/Ux6ep6q.png" alt="Reimagined Chess">
-            <div>
-                <h2>Reimagined Chess</h2>
-                <p>A web-based chess-like game with an AI. Click to learn more</p>
-                <div class="year-tag">Y8</div>
-            </div>
-        </div>
-        <div class="project" onclick="window.location.href='https://tennisml.ashertenenbaum.com'">
-            <img src="https://i.imgur.com/o34unHE.png" alt="TennisML">
-            <div>
-                <h2>TennisML</h2>
-                <p>An AI-powered tennis serve analysis tool. Click to learn more</p>
-                <div class="year-tag">Y9</div>
-            </div>
-        </div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="title-wrap">
+      <div>
+        <h1 class="title">My Projects</h1>
+        <p class="subtitle">From newest to oldest (Y10 → Y7). Hover a year badge to see my age at the time.</p>
+        <div class="legend"><span class="dot"></span>Interactive cards · Animated hover details · Opens in a new tab</div>
+      </div>
     </div>
+
+    <div class="grid">
+      <!-- Y10 -->
+      <a class="project" href="https://ashertenenbaum.github.io/footballprediction" target="_blank" rel="noopener noreferrer" aria-label="Open Predicting the FIFA Club World Cup (opens in new tab)">
+        <div class="thumb">
+          <img src="https://i.imgur.com/qJokWT9.png" alt="Predicting the FIFA Club World Cup" />
+          <div class="shine"></div>
+        </div>
+        <div class="content">
+          <div class="title-row">
+            <h2>Predicting the FIFA Club World Cup</h2>
+          </div>
+          <p class="desc">
+            Used machine learning on 228k+ matches to simulate the Club World Cup 10,000 times. My best model (XGBoost) produced realistic title odds, closely tracking the Opta Supercomputer despite using only free data and a single home PC. I also built a demo web app for live predictions and AI commentary.
+          </p>
+        </div>
+        <div class="overlay">
+          <div class="left">
+            <span class="chip">ML / XGBoost</span>
+            <span class="chip">228k+ matches</span>
+            <span class="chip">10k simulations</span>
+            <span class="chip">Web demo</span>
+          </div>
+          <div class="cta">Open Project ↗</div>
+        </div>
+        <div class="year-tag" aria-hidden="true">
+          <span class="pill">
+            <span class="year">Y10</span>
+            <span class="age">15&nbsp;yrs</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Y9 -->
+      <a class="project" href="https://ashertenenbaum.github.io/Tennis_ML/" target="_blank" rel="noopener noreferrer" aria-label="Open TennisML (opens in new tab)">
+        <div class="thumb">
+          <img src="https://i.imgur.com/o34unHE.png" alt="TennisML" />
+          <div class="shine"></div>
+        </div>
+        <div class="content">
+          <div class="title-row">
+            <h2>TennisML</h2>
+          </div>
+          <p class="desc">
+            An AI-powered tennis serve analysis tool. Upload or stream serve clips and get form insights, pose landmarks, and basic feedback. Built as a proof of concept for on-court coaching aids.
+          </p>
+        </div>
+        <div class="overlay">
+          <div class="left">
+            <span class="chip">Computer Vision</span>
+            <span class="chip">Pose/Keypoints</span>
+            <span class="chip">Web App</span>
+          </div>
+          <div class="cta">Open Project ↗</div>
+        </div>
+        <div class="year-tag" aria-hidden="true">
+          <span class="pill">
+            <span class="year">Y9</span>
+            <span class="age">14&nbsp;yrs</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Y8 -->
+      <a class="project" href="https://ashertenenbaum.github.io/ReimaginedChess/" target="_blank" rel="noopener noreferrer" aria-label="Open Reimagined Chess (opens in new tab)">
+        <div class="thumb">
+          <img src="https://i.imgur.com/Ux6ep6q.png" alt="Reimagined Chess" />
+          <div class="shine"></div>
+        </div>
+        <div class="content">
+          <div class="title-row">
+            <h2>Reimagined Chess</h2>
+          </div>
+          <p class="desc">
+            A web-based chess-like game featuring custom rules and a simple AI opponent. Built to explore game design, search, and heuristics in a playful UI.
+          </p>
+        </div>
+        <div class="overlay">
+          <div class="left">
+            <span class="chip">Game Dev</span>
+            <span class="chip">Mini AI</span>
+            <span class="chip">Browser</span>
+          </div>
+          <div class="cta">Open Project ↗</div>
+        </div>
+        <div class="year-tag" aria-hidden="true">
+          <span class="pill">
+            <span class="year">Y8</span>
+            <span class="age">13&nbsp;yrs</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Y7 -->
+      <a class="project" href="https://ashertenenbaum.github.io/cardiac_care/" target="_blank" rel="noopener noreferrer" aria-label="Open Cardiac Care (opens in new tab)">
+        <div class="thumb">
+          <img src="https://i.imgur.com/urACt1q.png" alt="Cardiac Care" />
+          <div class="shine"></div>
+        </div>
+        <div class="content">
+          <div class="title-row">
+            <h2>Cardiac Care</h2>
+          </div>
+          <p class="desc">
+            Remaking body parts with 3D printing—an early dive into medical modeling and digital fabrication to visualize anatomy and prosthetic concepts.
+          </p>
+        </div>
+        <div class="overlay">
+          <div class="left">
+            <span class="chip">3D Printing</span>
+            <span class="chip">CAD</span>
+            <span class="chip">STEM</span>
+          </div>
+          <div class="cta">Open Project ↗</div>
+        </div>
+        <div class="year-tag" aria-hidden="true">
+          <span class="pill">
+            <span class="year">Y7</span>
+            <span class="age">12&nbsp;yrs</span>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <p class="note">Tip: hover the cards for more info. All project links open in a new tab.</p>
+  </div>
 </body>
 </html>
